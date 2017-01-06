@@ -129,10 +129,29 @@ public class RocketController : MonoBehaviour
                     exhaustSource.Stop();
                 }
             }
+            //Calculate drag based on rocket angle compared to direction of velocity 
+            var cpScale = Vector3.Dot(myRigidbody.velocity, transform.right);
+            var dragScale = Mathf.Abs(cpScale) * -1f;
+            var liftScale = cpScale * 0.25f;
+
+            var cp = transform.TransformPoint(0, centerOfPressure * bodyLength, 0);
+
+            //apply stabilizing force from drag to the center of pressure
+            myRigidbody.AddForceAtPosition(myRigidbody.velocity * dragScale, cp);
+
+            //apply lift
+            var liftDirection = Vector3.Cross(Vector3.forward, myRigidbody.velocity).normalized;
+            myRigidbody.AddForceAtPosition(liftDirection * myRigidbody.velocity.magnitude * liftScale, cp);
+
+            //apply wind
+            var windScale = GameplayManager.Instance.Wind * Mathf.Abs(Vector3.Dot(myRigidbody.velocity.normalized, transform.up));
+            myRigidbody.AddForceAtPosition(Vector3.right * windScale, cp);
+
             if(currentFuel<=0f && myRigidbody.velocity.y < 0f)
             {
                 GameplayManager.Instance.OnLaunchFinished();
             }
+
 
         }
 	}
