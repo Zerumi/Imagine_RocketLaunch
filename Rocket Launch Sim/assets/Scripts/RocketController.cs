@@ -101,7 +101,40 @@ public class RocketController : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		// *** Add your source code here ***
+		if (flying)
+        {
+            //Use fuel if avaliable
+            if (currentFuel > 0f)
+            {
+                //Exaust particle FX
+                exhaustParticles.Play();
+
+                if (!exhaustParticles.isPlaying)
+                {
+                    exhaustSource.Play();
+                }
+                // Aply force down the lenght of the rocket
+                myRigidbody.AddRelativeForce(Vector3.up * impulse, ForceMode.Force);
+
+                //Substract fuel
+                currentFuel = Mathf.Max(0f, currentFuel - Time.fixedDeltaTime);
+
+                //Update mas based on remaing fuel
+                myRigidbody.mass = initialMass + currentFuel;
+                if(currentFuel == 0f)
+                {
+                    GameplayManager.Instance.OnFuelEmpty();
+                    //No more exhaust FX whe out of fuel
+                    exhaustParticles.Stop();
+                    exhaustSource.Stop();
+                }
+            }
+            if(currentFuel<=0f && myRigidbody.velocity.y < 0f)
+            {
+                GameplayManager.Instance.OnLaunchFinished();
+            }
+
+        }
 	}
 
 
