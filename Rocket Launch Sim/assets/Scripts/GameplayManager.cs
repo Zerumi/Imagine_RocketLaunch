@@ -164,7 +164,12 @@ public class GameplayManager : MonoBehaviour
 	/// </summary>
 	void UpdateBudget()
 	{
-		// *** Add your source code here ***
+        RocketMaterial material = rocketMaterials[currentMaterialIndex];
+        RocketFuel fuel = rocketFuels[currentFuelIndex];
+        int currentExpenses = material.cost;
+
+        currentExpenses += fuel.costPerWeight * Mathf.RoundToInt(currentFuelMass);
+        UIManager.Instance.UpdateBudget(currentExpenses, budget);
 	}
 
 	public void OnFuelEmpty()
