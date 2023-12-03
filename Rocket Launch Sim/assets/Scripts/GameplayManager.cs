@@ -34,7 +34,7 @@ public class GameplayManager : MonoBehaviour
 	RocketController rocket = null;
 
 	[SerializeField]
-	int budget = 40000;
+	int budget = 400000;
 
 	[SerializeField]
 	List<RocketMaterial> rocketMaterials;
@@ -48,6 +48,11 @@ public class GameplayManager : MonoBehaviour
 	[SerializeField]
 	float wind = 1f;
 
+	[SerializeField]
+	GameObject rocket_obj; // Ссылка на объект Rocket
+	[SerializeField]
+	GameObject firstPart_obj; // Ссылка на объект FirstPart
+
 	public float Wind
 	{
 		get
@@ -58,7 +63,9 @@ public class GameplayManager : MonoBehaviour
 
 	int currentMaterialIndex = 0;
 	int currentFuelIndex = 0;
-	float currentFuelMass = 1;
+	float currentFuelMass = 1f;
+	int currentAngle = 0;
+	float currentEnginePower = 1f;
 
 	void Awake()
 	{
@@ -118,6 +125,7 @@ public class GameplayManager : MonoBehaviour
 	public void OnRetryLevel()
 	{
 		rocket.Reset();
+		rocket.AttachFirstPartToRocket();
 		UIManager.Instance.ShowScreen("");
 		Invoke("OnStartGame", 0.5f);
 	}
@@ -159,6 +167,26 @@ public class GameplayManager : MonoBehaviour
 		UpdateBudget();
 	}
 
+	public float GetCurrentEnginePower() {
+		return currentEnginePower;
+	}
+
+	public int GetCurrentAngle() {
+		return currentAngle;
+	}
+	
+	public void SetAngle(int value)
+	{
+		currentAngle = value;
+		UIManager.Instance.UpdateAngle(value);
+	}
+	
+	public void SetEnginePower(float value)
+	{
+		currentEnginePower = value;
+		UIManager.Instance.UpdateEnginePower(value);
+	}
+
 	/// <summary>
 	/// Call this function to recalculate the budget used on the rocket.
 	/// </summary>
@@ -187,6 +215,14 @@ public class GameplayManager : MonoBehaviour
 		maxHeight = Mathf.Max(height, maxHeight);
 		maxSpeed = Mathf.Max(speed, maxSpeed);
 		UIManager.Instance.UpdateHUD(speed, maxSpeed, height, maxHeight);
+	}
+
+	public GameObject GetRocketObj() {
+		return rocket_obj;
+	}
+
+	public GameObject GetFirstPart() {
+		return firstPart_obj;
 	}
 
 	public bool IsInGame()

@@ -8,6 +8,13 @@ using System.Collections;
 public class RocketController : MonoBehaviour
 {
 	Rigidbody myRigidbody = null;
+	Component firstPart = null;
+
+	[SerializeField]
+	float enginePower = 1f;
+
+	[SerializeField]
+	int angle = 0;
 
 	[SerializeField]
 	ParticleSystem exhaustParticles = null;
@@ -52,6 +59,7 @@ public class RocketController : MonoBehaviour
 	bool outOfFuel = false;
 
 	Vector3 startPosition;
+	Vector3 startPositionFirst;
 
 	void Awake()
 	{
@@ -67,6 +75,9 @@ public class RocketController : MonoBehaviour
 
 		myRigidbody = GetComponent<Rigidbody>();
 		startPosition = myRigidbody.position;
+		firstPart = GameplayManager.Instance.GetFirstPart().GetComponent<Component>();
+		startPositionFirst = firstPart.transform.position;
+
 
 		// Set center of mass value directly in physics engine.
 		// Unfortunately, Unity does not have a center of pressure built-in.
@@ -101,6 +112,8 @@ public class RocketController : MonoBehaviour
 
 	void FixedUpdate()
 	{
+		enginePower = GameplayManager.Instance.GetCurrentEnginePower();
+		angle = GameplayManager.Instance.GetCurrentAngle();
 		if (flying)
         {
             //Use fuel if avaliable
@@ -114,15 +127,16 @@ public class RocketController : MonoBehaviour
                     exhaustSource.Play();
                 }
                 // Aply force down the lenght of the rocket
-                myRigidbody.AddRelativeForce(Vector3.up * impulse, ForceMode.Force);
+                myRigidbody.AddRelativeForce(Vector3.up * impulse * enginePower, ForceMode.Force);
 
                 //Substract fuel
-                currentFuel = Mathf.Max(0f, currentFuel - Time.fixedDeltaTime);
+                currentFuel = Mathf.Max(0f, currentFuel - Time.fixedDeltaTime * enginePower);
 
                 //Update mas based on remaing fuel
                 myRigidbody.mass = initialMass + currentFuel;
                 if(currentFuel == 0f)
                 {
+					DetachFirstPartFromRocket();
                     GameplayManager.Instance.OnFuelEmpty();
                     //No more exhaust FX whe out of fuel
                     exhaustParticles.Stop();
@@ -213,6 +227,46 @@ public class RocketController : MonoBehaviour
 	public void SetImpulse(float value)
 	{
 		impulse = value;
+	}
+
+	public GameObject FindByName(GameObject parent, string name)
+	{
+		if (parent.name == name) return parent;
+		foreach (Transform child in parent.transform)
+		{
+			GameObject result = FindByName(child.gameObject, name);
+			if (result != null) return result;
+		}
+		return null;
+	}
+
+	public void DetachFirstPartFromRocket()
+	{
+		// Получаем компоненты FirstPart и Rocket
+		Component firstPartComponent = GameplayManager.Instance.GetFirstPart().GetComponent<Component>();
+		Component rocketComponent = GameplayManager.Instance.GetRocketObj().GetComponent<Component>();
+		
+		if (firstPartComponent != null && rocketComponent != null)
+		{
+			// Отсоединяем FirstPart от Rocket
+			firstPartComponent.transform.parent = null;
+		}
+	}
+
+	public void AttachFirstPartToRocket()
+	{
+		// Получаем компоненты FirstPart и Rocket
+		Component firstPartComponent = GameplayManager.Instance.GetFirstPart().GetComponent<Component>();
+		Component rocketComponent = GameplayManager.Instance.GetRocketObj().GetComponent<Component>();
+		
+		if (firstPartComponent != null && rocketComponent != null)
+		{
+			// Отсоединяем FirstPart от Rocket
+			firstPartComponent.transform.parent = rocketComponent.transform;
+			
+			firstPartComponent.transform.position = startPositionFirst;
+			firstPartComponent.transform.rotation = Quaternion.identity;
+		}
 	}
 
 	public void OnCollisionEnter(Collision collision)

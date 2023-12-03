@@ -33,6 +33,18 @@ public class UIManager : MonoBehaviour
 	Text fuelTypeValue = null;
 
 	[SerializeField]
+	Slider angleSlider = null;
+	
+	[SerializeField]
+	Text angleValue = null;
+
+	[SerializeField]
+	Slider enginePowerSlider = null;
+	
+	[SerializeField]
+	Text enginePowerValue = null;
+
+	[SerializeField]
 	Slider fuelAmountSlider = null;
 
 	[SerializeField]
@@ -83,6 +95,8 @@ public class UIManager : MonoBehaviour
 		rocketMaterialSlider.onValueChanged.AddListener(OnRocketMaterialChanged);
 		fuelTypeSlider.onValueChanged.AddListener(OnFuelTypeChanged);
 		fuelAmountSlider.onValueChanged.AddListener(OnFuelAmountChanged);
+		enginePowerSlider.onValueChanged.AddListener(OnEnginePowerChanged);
+		angleSlider.onValueChanged.AddListener(OnAngleChanged);
 	}
 
 	void OnDisable()
@@ -90,6 +104,8 @@ public class UIManager : MonoBehaviour
 		rocketMaterialSlider.onValueChanged.RemoveListener(OnRocketMaterialChanged);
 		fuelTypeSlider.onValueChanged.RemoveListener(OnFuelTypeChanged);
 		fuelAmountSlider.onValueChanged.RemoveListener(OnFuelAmountChanged);
+		enginePowerSlider.onValueChanged.RemoveListener(OnEnginePowerChanged);
+		angleSlider.onValueChanged.RemoveListener(OnAngleChanged);
 	}
 
 	/// <summary>
@@ -249,6 +265,14 @@ public class UIManager : MonoBehaviour
 		launchButton.interactable = !cpDisabled && !overBudget;
 	}
 
+	public void UpdateAngle(int angle) {
+		angleValue.text = angle.ToString();
+	}
+
+	public void UpdateEnginePower(float power) {
+		enginePowerValue.text = power.ToString();
+	}
+
 	/// <summary>
 	/// Handler for slider events on the rocket material slider.
 	/// </summary>
@@ -265,6 +289,24 @@ public class UIManager : MonoBehaviour
 	void OnFuelTypeChanged(float value)
 	{
 		GameplayManager.Instance.SetFuelType(Mathf.RoundToInt(value));
+	}
+
+	/// <summary>
+	/// Handler for slider events on the angle slider.
+	/// </summary>
+	/// <param name="value">Value of the slider.</param>
+	void OnAngleChanged(float value)
+	{
+		GameplayManager.Instance.SetAngle(Mathf.RoundToInt(value));
+	}
+
+	/// <summary>
+	/// Handler for slider events on the angle slider.
+	/// </summary>
+	/// <param name="value">Value of the slider.</param>
+	void OnEnginePowerChanged(float value)
+	{
+		GameplayManager.Instance.SetEnginePower(value);
 	}
 
 	/// <summary>
