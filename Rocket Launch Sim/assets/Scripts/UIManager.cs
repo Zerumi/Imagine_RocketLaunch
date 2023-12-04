@@ -19,9 +19,12 @@ public class UIManager : MonoBehaviour
 	Text budgetText = null;
 	Color underBudgetColor = Color.white;
 	Color overBudgetColor = Color.red;
+	
+	[SerializeField]
+	Slider rocketFirstMassSlider = null;
 
 	[SerializeField]
-	Slider rocketMaterialSlider = null;
+	Slider rocketSecondMassSlider = null;
 
 	[SerializeField]
 	Text rocketMaterialValue = null;
@@ -45,7 +48,10 @@ public class UIManager : MonoBehaviour
 	Text enginePowerValue = null;
 
 	[SerializeField]
-	Slider fuelAmountSlider = null;
+	Slider fuelSecondAmountSlider = null;
+	
+	[SerializeField]
+	Slider fuelFirstAmountSlider = null;
 
 	[SerializeField]
 	Button launchButton = null;
@@ -92,18 +98,22 @@ public class UIManager : MonoBehaviour
 
 	void OnEnable()
 	{
-		rocketMaterialSlider.onValueChanged.AddListener(OnRocketMaterialChanged);
+		rocketFirstMassSlider.onValueChanged.AddListener(OnRocketFirstMassChanged);
+		rocketSecondMassSlider.onValueChanged.AddListener(OnRocketSecondMassChanged);
 		fuelTypeSlider.onValueChanged.AddListener(OnFuelTypeChanged);
-		fuelAmountSlider.onValueChanged.AddListener(OnFuelAmountChanged);
+		fuelSecondAmountSlider.onValueChanged.AddListener(OnFuelSecondAmountChanged);
+		fuelFirstAmountSlider.onValueChanged.AddListener(OnFuelFirstAmountChanged);
 		enginePowerSlider.onValueChanged.AddListener(OnEnginePowerChanged);
 		angleSlider.onValueChanged.AddListener(OnAngleChanged);
 	}
 
 	void OnDisable()
 	{
-		rocketMaterialSlider.onValueChanged.RemoveListener(OnRocketMaterialChanged);
+		rocketFirstMassSlider.onValueChanged.RemoveListener(OnRocketFirstMassChanged);
+		rocketSecondMassSlider.onValueChanged.RemoveListener(OnRocketSecondMassChanged);
 		fuelTypeSlider.onValueChanged.RemoveListener(OnFuelTypeChanged);
-		fuelAmountSlider.onValueChanged.RemoveListener(OnFuelAmountChanged);
+		fuelSecondAmountSlider.onValueChanged.RemoveListener(OnFuelSecondAmountChanged);
+		fuelFirstAmountSlider.onValueChanged.RemoveListener(OnFuelFirstAmountChanged);
 		enginePowerSlider.onValueChanged.RemoveListener(OnEnginePowerChanged);
 		angleSlider.onValueChanged.RemoveListener(OnAngleChanged);
 	}
@@ -138,14 +148,8 @@ public class UIManager : MonoBehaviour
 	/// <param name="materials">List of valid rocket materials.</param>
 	/// <param name="fuels">List of valid fuel types.</param>
 	/// <param name="maxFuel">Maximum fuel allowed.</param>
-	public void SetupControlPanel(List<RocketMaterial> materials, List<RocketFuel> fuels, int maxFuel)
+	public void SetupControlPanel(List<RocketFuel> fuels, int maxFuel)
 	{
-		// Rocket material slider is whole numbers corresponding to indices into the material list
-		rocketMaterialSlider.minValue = 0;
-		rocketMaterialSlider.maxValue = materials.Count - 1;
-		rocketMaterialSlider.wholeNumbers = true;
-		rocketMaterialSlider.value = 0;
-
 		// Fuel type slider is whole numbers corresponding to indices into the fuel type list
 		fuelTypeSlider.minValue = 0;
 		fuelTypeSlider.maxValue = fuels.Count - 1;
@@ -153,10 +157,14 @@ public class UIManager : MonoBehaviour
 		fuelTypeSlider.value = 0;
 
 		// Fuel amount slider is whole numbers from 1 to maxFuel
-		fuelAmountSlider.minValue = 1;
-		fuelAmountSlider.maxValue = maxFuel;
+		fuelSecondAmountSlider.minValue = 1;
+		fuelSecondAmountSlider.maxValue = maxFuel;
 		fuelTypeSlider.wholeNumbers = true;
-		fuelAmountSlider.value = 1;
+		fuelSecondAmountSlider.value = 1;
+
+		fuelFirstAmountSlider.minValue = 1;
+		fuelFirstAmountSlider.maxValue = maxFuel;
+		fuelFirstAmountSlider.value = 1;
 	}
 
 	public void UpdateHUD(float speed, float maxSpeed, float height, float maxHeight)
@@ -273,13 +281,18 @@ public class UIManager : MonoBehaviour
 		enginePowerValue.text = power.ToString();
 	}
 
+	void OnRocketFirstMassChanged(float value)
+	{
+		GameplayManager.Instance.SetRocketFirstMass(value);
+	}
+
 	/// <summary>
 	/// Handler for slider events on the rocket material slider.
 	/// </summary>
 	/// <param name="value">Value of the slider.</param>
-	void OnRocketMaterialChanged(float value)
+	void OnRocketSecondMassChanged(float value)
 	{
-		GameplayManager.Instance.SetRocketMaterial(Mathf.RoundToInt(value));
+		GameplayManager.Instance.SetRocketSecondMass(value);
 	}
 
 	/// <summary>
@@ -289,6 +302,20 @@ public class UIManager : MonoBehaviour
 	void OnFuelTypeChanged(float value)
 	{
 		GameplayManager.Instance.SetFuelType(Mathf.RoundToInt(value));
+	}
+
+	void OnFuelFirstAmountChanged(float value)
+	{
+		GameplayManager.Instance.SetFuelFirstAmount(value);
+	}
+
+	/// <summary>
+	/// Handler for slider events on the fuel amount slider.
+	/// </summary>
+	/// <param name="value">Value of the slider.</param>
+	void OnFuelSecondAmountChanged(float value)
+	{
+		GameplayManager.Instance.SetFuelSecondAmount(value);
 	}
 
 	/// <summary>
@@ -309,14 +336,6 @@ public class UIManager : MonoBehaviour
 		GameplayManager.Instance.SetEnginePower(value);
 	}
 
-	/// <summary>
-	/// Handler for slider events on the fuel amount slider.
-	/// </summary>
-	/// <param name="value">Value of the slider.</param>
-	void OnFuelAmountChanged(float value)
-	{
-		GameplayManager.Instance.SetFuelAmount(value);
-	}
 
 	/// <summary>
 	/// Called when the tutorial screen is shown.
@@ -349,9 +368,9 @@ public class UIManager : MonoBehaviour
 	void EnableControlPanel(bool enabled)
 	{
 		cpDisabled = !enabled;
-		rocketMaterialSlider.interactable = enabled;
+		rocketSecondMassSlider.interactable = enabled;
 		fuelTypeSlider.interactable = enabled;
-		fuelAmountSlider.interactable = enabled;
+		fuelSecondAmountSlider.interactable = enabled;
 
 		//Launch button is only enabled if we're also not over budget
 		launchButton.interactable = !cpDisabled && !overBudget;

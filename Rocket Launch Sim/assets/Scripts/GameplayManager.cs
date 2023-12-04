@@ -64,6 +64,8 @@ public class GameplayManager : MonoBehaviour
 	int currentMaterialIndex = 0;
 	int currentFuelIndex = 0;
 	float currentFuelMass = 1f;
+	float currentFuelFirstMass = 1f;
+	float currentFuelSecondMass = 1f;
 	int currentAngle = 0;
 	float currentEnginePower = 1f;
 
@@ -75,7 +77,7 @@ public class GameplayManager : MonoBehaviour
 
 	void Start()
 	{
-		UIManager.Instance.SetupControlPanel(rocketMaterials, rocketFuels, maxFuel);
+		UIManager.Instance.SetupControlPanel(rocketFuels, maxFuel);
 		state = GameState.Tutorial;
 		UIManager.Instance.OnTutorial();
 		// Refresh the HUD and show the tutorial screen.
@@ -130,17 +132,18 @@ public class GameplayManager : MonoBehaviour
 		Invoke("OnStartGame", 0.5f);
 	}
 
+	public void SetRocketFirstMass(float value) {
+		rocket.SetFirstMass(value);
+	}
+
 	/// <summary>
 	/// Call this function to change the material the rocket is made of.
 	/// Different materials affect the mass of the rocket and cost of the rocket.
 	/// </summary>
 	/// <param name="value">The index of the rocket material to use.</param>
-	public void SetRocketMaterial(int value)
+	public void SetRocketSecondMass(float value)
 	{
-		currentMaterialIndex = value;
-		UIManager.Instance.UpdateRocketMaterial(rocketMaterials[value]);
-		rocket.SetMass(rocketMaterials[value].weight);
-		UpdateBudget();
+		rocket.SetSecondMass(value);
 	}
 	
 	/// <summary>
@@ -153,18 +156,27 @@ public class GameplayManager : MonoBehaviour
 		currentFuelIndex = value;
 		UIManager.Instance.UpdateFuelType(rocketFuels[value]);
 		rocket.SetImpulse(rocketFuels[value].impulsePerWeight);
-		UpdateBudget();
 	}
 
 	/// <summary>
 	/// Call this function to change the amount of fuel the rocket uses.
 	/// </summary>
 	/// <param name="value">The amount of fuel to use.</param>
-	public void SetFuelAmount(float value)
+	public void SetFuelSecondAmount(float value)
 	{
-		currentFuelMass = value;
-		rocket.SetFuelMass(value);
-		UpdateBudget();
+		currentFuelSecondMass = value;
+		rocket.SetSecondFuelMass(value);
+	}
+
+	public void SetFuelFirstAmount(float value)
+	{
+		currentFuelFirstMass = value;
+		rocket.SetFuelFirstMass(value);
+	}
+
+	void SetCurrentFuel()
+	{
+		currentFuelMass = currentFuelFirstMass + currentFuelSecondMass;
 	}
 
 	public float GetCurrentEnginePower() {

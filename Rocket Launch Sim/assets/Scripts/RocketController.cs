@@ -40,9 +40,15 @@ public class RocketController : MonoBehaviour
 	float windMinVolume, windMaxVolume;
 
 	float startFuel;
+	float startFuelFirst;
+	float startFuelSecond;
 	float currentFuel;
+	float currentFuelFirst;
+	float currentFuelSecond;
 
 	float initialMass;
+	float secondPartMass;
+	float firstPartMass;
 
 	float impulse;
 
@@ -57,6 +63,7 @@ public class RocketController : MonoBehaviour
 
 	bool flying = false;
 	bool outOfFuel = false;
+	bool outOfFuelFirst = false;
 
 	Vector3 startPosition;
 	Vector3 startPositionFirst;
@@ -64,6 +71,7 @@ public class RocketController : MonoBehaviour
 	void Awake()
 	{
 		startFuel = 1f;
+		startFuelFirst = 1f;
 		initialMass = 1f;
 		impulse = 1f;
 	}
@@ -107,8 +115,12 @@ public class RocketController : MonoBehaviour
 
 		flying = false;
 		outOfFuel = false;
+		outOfFuelFirst = false;
 		windSource.Stop();
 	}
+
+	bool applyVelocity = false;
+	Vector3 savedVelocity;
 
 	void FixedUpdate()
 	{
@@ -116,6 +128,11 @@ public class RocketController : MonoBehaviour
 		angle = GameplayManager.Instance.GetCurrentAngle();
 		if (flying)
         {
+			if (applyVelocity)
+			{
+				myRigidbody.velocity = savedVelocity;
+				applyVelocity = false;
+			}
             //Use fuel if avaliable
             if (currentFuel > 0f)
             {
@@ -130,13 +147,26 @@ public class RocketController : MonoBehaviour
                 myRigidbody.AddRelativeForce(Vector3.up * impulse * enginePower, ForceMode.Force);
 
                 //Substract fuel
-                currentFuel = Mathf.Max(0f, currentFuel - Time.fixedDeltaTime * enginePower);
+				if (currentFuelFirst > 0f) {
+					currentFuelFirst = Mathf.Max(0f, currentFuelFirst - Time.fixedDeltaTime * enginePower);
+				}
+				else if (currentFuelSecond > 0f) {
+					currentFuelSecond = Mathf.Max(0f, currentFuelSecond - Time.fixedDeltaTime * enginePower);
+				}
+
+				currentFuel = currentFuelFirst + currentFuelSecond;
 
                 //Update mas based on remaing fuel
-                myRigidbody.mass = initialMass + currentFuel;
+				if (currentFuelFirst == 0f && !outOfFuelFirst) {
+					outOfFuelFirst = true;
+					applyVelocity = true;
+					savedVelocity = myRigidbody.velocity;
+					DetachFirstPartFromRocket();
+					initialMass -= firstPartMass;
+				}
+				myRigidbody.mass = initialMass + currentFuelSecond + currentFuelFirst;
                 if(currentFuel == 0f)
                 {
-					DetachFirstPartFromRocket();
                     GameplayManager.Instance.OnFuelEmpty();
                     //No more exhaust FX whe out of fuel
                     exhaustParticles.Stop();
@@ -198,26 +228,51 @@ public class RocketController : MonoBehaviour
 		// Turn on physics
 		myRigidbody.isKinematic = false;
 		// Update mass based on fuel used
-		myRigidbody.mass = initialMass + startFuel;
+		myRigidbody.mass = initialMass + startFuel + startFuelFirst;
 		currentFuel = startFuel;
+		currentFuelFirst = startFuelFirst;
+		currentFuelSecond = startFuelSecond;
+	}
+
+	public void SetFirstMass(float value)
+	{
+		firstPartMass = value;
+		SetInitMass();
 	}
 
 	/// <summary>
 	/// Sets the rocket's mass, minus fuel.
 	/// </summary>
 	/// <param name="value">Mass.</param>
-	public void SetMass(float value)
+	public void SetSecondMass(float value)
 	{
-		initialMass = value;
+		secondPartMass = value;
+		SetInitMass();
+	}
+
+	void SetInitMass() {
+		initialMass = firstPartMass + secondPartMass;
+	}
+
+	public void SetFuelFirstMass(float value)
+	{
+		startFuelFirst = value;
+		setInitFuel();
 	}
 
 	/// <summary>
 	/// Sets the amount of fuel to use for this rocket launch.
 	/// </summary>
 	/// <param name="value">Fuel mass.</param>
-	public void SetFuelMass(float value)
+	public void SetSecondFuelMass(float value)
 	{
-		startFuel = value;
+		startFuelSecond = value;
+		setInitFuel();
+	}
+
+	void setInitFuel()
+	{
+		startFuel = startFuelFirst + startFuelSecond;
 	}
 
 	/// <summary>
