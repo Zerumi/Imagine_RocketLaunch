@@ -108,6 +108,7 @@ public class GameplayManager : MonoBehaviour
 		state = GameState.InGame;
 		UIManager.Instance.OnStartFlying();
 		CameraController.Instance.OnFlyingStarted();
+		Stopwatch.Instance.startStopwatch();
 		rocket.StartFlying();
 	}
 
@@ -118,6 +119,7 @@ public class GameplayManager : MonoBehaviour
 	{
 		CameraController.Instance.OnFlyingEnded();
 		state = GameState.GameOver;
+		Stopwatch.Instance.stopStopwatch();
 		UIManager.Instance.ShowScreen("Game Over");
 	}
 

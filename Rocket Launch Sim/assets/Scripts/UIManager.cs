@@ -55,6 +55,9 @@ public class UIManager : MonoBehaviour
 
 	[SerializeField]
 	Button launchButton = null;
+	
+	[SerializeField]
+	Text stopwatch = null;
 
 	bool cpDisabled = false;
 	bool overBudget = false;
@@ -374,6 +377,11 @@ public class UIManager : MonoBehaviour
 
 		//Launch button is only enabled if we're also not over budget
 		launchButton.interactable = !cpDisabled && !overBudget;
+	}
+
+	public Text getStopwatch()
+	{
+		return stopwatch;
 	}
 
 	/// <summary>
