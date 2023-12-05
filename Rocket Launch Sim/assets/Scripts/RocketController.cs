@@ -14,7 +14,7 @@ public class RocketController : MonoBehaviour
 	float enginePower = 1f;
 
 	[SerializeField]
-	int angle = 0;
+	float angle = 0;
 
 	[SerializeField]
 	ParticleSystem exhaustParticles = null;
@@ -125,10 +125,14 @@ public class RocketController : MonoBehaviour
 	float lastEnginePower = -1f;
 	float timeToSubtract = 0f;
 	float startMass;
+
+	float previousMass;
+	float r;
+
 	void FixedUpdate()
 	{
 		enginePower = GameplayManager.Instance.GetCurrentEnginePower();
-		angle = GameplayManager.Instance.GetCurrentAngle();
+		angle = Mathf.SmoothDampAngle(transform.eulerAngles.z, (float)GameplayManager.Instance.GetCurrentAngle (), ref r, 1f);
 		if (flying)
         {
             //Use fuel if avaliable
@@ -142,7 +146,6 @@ public class RocketController : MonoBehaviour
                     exhaustSource.Play();
                 }
 
-
 				// m = m0 * exp(-alpha*t)
 
 				float timeElapsed = Stopwatch.Instance.getElapsed();
@@ -151,12 +154,18 @@ public class RocketController : MonoBehaviour
 					startMass = myRigidbody.mass;
 					timeToSubtract = timeElapsed;
 				}
+
+				//Vector3 impulseToAdd = (previousMass - initialMass + currentFuelSecond + currentFuelFirst) * myRigidbody.velocity;
+
+				//myRigidbody.AddRelativeForce(impulseToAdd, ForceMode.Impulse);
 				
 				myRigidbody.mass = initialMass + currentFuelSecond + currentFuelFirst;
 
-				float massToRemain = (startMass) * Mathf.Exp(-(enginePower*9.81f) * (timeElapsed - timeToSubtract) / impulse);
+				float massToRemain = (startMass) * Mathf.Exp(-(enginePower * 9.81f) * (timeElapsed - timeToSubtract) / impulse);
 				float massToSubtract = (myRigidbody.mass - massToRemain);
 
+				myRigidbody.transform.rotation = Quaternion.AngleAxis(angle, new Vector3(0,0,1));
+				myRigidbody.AddRelativeForce(Vector3.up * massToSubtract * impulse, ForceMode.Force);
 				myRigidbody.AddRelativeForce(Vector3.up * enginePower * 9.81f, ForceMode.Acceleration);
 
                 //Substract fuel
@@ -171,8 +180,8 @@ public class RocketController : MonoBehaviour
 
 				if (dontupdatemaxspeed) {
 					dontupdatemaxspeed = false;
-					myRigidbody.AddForce(velocityToAdd, ForceMode.VelocityChange);
 					
+					myRigidbody.AddForce(velocityToAdd, ForceMode.VelocityChange);
 					myRigidbody.freezeRotation = false;
 				}
                 //Update mas based on remaing fuel
@@ -194,31 +203,13 @@ public class RocketController : MonoBehaviour
                     exhaustSource.Stop();
                 }
             }
-            //Calculate drag based on rocket angle compared to direction of velocity 
-            /* var cpScale = Vector3.Dot(myRigidbody.velocity, transform.right);
-            var dragScale = Mathf.Abs(cpScale) * -1f;
-            var liftScale = cpScale * 0.25f;
-
-            var cp = transform.TransformPoint(0, centerOfPressure * bodyLength, 0);
-
-            //apply stabilizing force from drag to the center of pressure
-            myRigidbody.AddForceAtPosition(myRigidbody.velocity * dragScale, cp);
-
-            //apply lift
-            var liftDirection = Vector3.Cross(Vector3.forward, myRigidbody.velocity).normalized;
-            myRigidbody.AddForceAtPosition(liftDirection * myRigidbody.velocity.magnitude * liftScale, cp);
-
-            //apply wind
-            var windScale = GameplayManager.Instance.Wind * Mathf.Abs(Vector3.Dot(myRigidbody.velocity.normalized, transform.up));
-            myRigidbody.AddForceAtPosition(Vector3.right * windScale, cp);
-            */
 
             if(currentFuel<=0f && myRigidbody.velocity.y < 0f)
             {
                 GameplayManager.Instance.OnLaunchFinished();
             }
 
-
+			previousMass = myRigidbody.mass;
         }
 		lastEnginePower = enginePower;
 	}
@@ -259,6 +250,7 @@ public class RocketController : MonoBehaviour
 		currentFuelFirst = startFuelFirst;
 		currentFuelSecond = startFuelSecond;
 		startMass = startFuel + initialMass;
+		previousMass = startMass;
 	}
 
 	public void SetFirstMass(float value)

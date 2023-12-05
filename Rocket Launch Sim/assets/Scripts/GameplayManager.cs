@@ -186,7 +186,7 @@ public class GameplayManager : MonoBehaviour
 	}
 
 	public int GetCurrentAngle() {
-		return currentAngle;
+		return -currentAngle;
 	}
 	
 	public void SetAngle(int value)
@@ -201,6 +201,7 @@ public class GameplayManager : MonoBehaviour
 		UIManager.Instance.UpdateEnginePower(value);
 	}
 
+	// marked for removal
 	/// <summary>
 	/// Call this function to recalculate the budget used on the rocket.
 	/// </summary>

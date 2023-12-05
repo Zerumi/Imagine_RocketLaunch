@@ -157,17 +157,20 @@ public class UIManager : MonoBehaviour
 		fuelTypeSlider.minValue = 0;
 		fuelTypeSlider.maxValue = fuels.Count - 1;
 		fuelTypeSlider.wholeNumbers = true;
-		fuelTypeSlider.value = 0;
+		fuelTypeSlider.value = 1;
 
 		// Fuel amount slider is whole numbers from 1 to maxFuel
 		fuelSecondAmountSlider.minValue = 1;
 		fuelSecondAmountSlider.maxValue = maxFuel;
 		fuelTypeSlider.wholeNumbers = true;
-		fuelSecondAmountSlider.value = 1;
+		fuelSecondAmountSlider.value = 100001;
 
 		fuelFirstAmountSlider.minValue = 1;
 		fuelFirstAmountSlider.maxValue = maxFuel;
-		fuelFirstAmountSlider.value = 1;
+		fuelFirstAmountSlider.value = 400000;
+
+		rocketFirstMassSlider.value = 22030;
+		rocketSecondMassSlider.value = 4037;
 	}
 
 	public void UpdateHUD(float speed, float maxSpeed, float height, float maxHeight)
