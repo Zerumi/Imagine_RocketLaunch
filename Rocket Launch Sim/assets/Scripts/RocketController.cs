@@ -125,7 +125,7 @@ public class RocketController : MonoBehaviour
 	float lastEnginePower = -1f;
 	float timeToSubtract = 0f;
 	float startMass;
-
+	float removedMass;
 	float previousMass;
 	float r;
 
@@ -161,7 +161,7 @@ public class RocketController : MonoBehaviour
 				
 				myRigidbody.mass = initialMass + currentFuelSecond + currentFuelFirst;
 
-				float massToRemain = (startMass) * Mathf.Exp(-(enginePower * 9.81f) * (timeElapsed - timeToSubtract) / impulse);
+				float massToRemain = (startMass) * Mathf.Exp(-(enginePower * 9.81f) * (timeElapsed - timeToSubtract) / impulse) - removedMass;
 				float massToSubtract = (myRigidbody.mass - massToRemain);
 
 				myRigidbody.transform.rotation = Quaternion.AngleAxis(angle, new Vector3(0,0,1));
@@ -194,6 +194,7 @@ public class RocketController : MonoBehaviour
 					myRigidbody.freezeRotation = true;
 					DetachFirstPartFromRocket();
 					initialMass -= firstPartMass;
+					removedMass += firstPartMass;
 				}
                 if(currentFuel == 0f)
                 {
