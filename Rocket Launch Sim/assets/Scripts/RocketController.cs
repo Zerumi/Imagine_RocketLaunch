@@ -118,6 +118,10 @@ public class RocketController : MonoBehaviour
 		outOfFuelFirst = false;
 		lastEnginePower = -1f;
 		timeToSubtract = 0f;
+		r = 0;
+		startMass = 0;
+		removedMass = 0;
+		previousMass = 0;
 		windSource.Stop();
 	}
 	bool dontupdatemaxspeed = false;
