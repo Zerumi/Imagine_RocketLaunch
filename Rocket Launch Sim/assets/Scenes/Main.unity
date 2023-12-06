@@ -168,7 +168,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.25735295, g: 0.38539556, b: 1, a: 1}
+  m_Color: {r: 0.37254903, g: 0.53333336, b: 0.7254902, a: 1}
   m_Intensity: 2.78
   m_Range: 8.5
   m_SpotAngle: 30
@@ -6504,7 +6504,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.25735295, g: 0.38539556, b: 1, a: 1}
+  m_Color: {r: 0.37254903, g: 0.53333336, b: 0.7254902, a: 1}
   m_Intensity: 3.55
   m_Range: 7.7
   m_SpotAngle: 30
@@ -6598,7 +6598,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.25735295, g: 0.38539556, b: 1, a: 1}
+  m_Color: {r: 0.37254903, g: 0.53333336, b: 0.7254902, a: 1}
   m_Intensity: 8
   m_Range: 14
   m_SpotAngle: 30
@@ -6724,7 +6724,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.25735295, g: 0.38539556, b: 1, a: 1}
+  m_Color: {r: 0.37254903, g: 0.53333336, b: 0.7254902, a: 1}
   m_Intensity: 7.3
   m_Range: 11.2
   m_SpotAngle: 30
@@ -6818,7 +6818,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.25735295, g: 0.38539556, b: 1, a: 1}
+  m_Color: {r: 0.37254903, g: 0.53333336, b: 0.7254902, a: 1}
   m_Intensity: 1.74
   m_Range: 13.2
   m_SpotAngle: 30
@@ -7485,7 +7485,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.2967128, g: 0.45749313, b: 0.7205882, a: 1}
+  m_Color: {r: 0.37348703, g: 0.5339088, b: 0.7264151, a: 1}
   m_Intensity: 2.36
   m_Range: 10
   m_SpotAngle: 30
@@ -9218,7 +9218,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.25735295, g: 0.38539556, b: 1, a: 1}
+  m_Color: {r: 0.37254903, g: 0.53333336, b: 0.7254902, a: 1}
   m_Intensity: 8
   m_Range: 18.6
   m_SpotAngle: 30
@@ -9797,7 +9797,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.25735295, g: 0.38539556, b: 1, a: 1}
+  m_Color: {r: 0.37254903, g: 0.53333336, b: 0.7254902, a: 1}
   m_Intensity: 3.3
   m_Range: 16.2
   m_SpotAngle: 30
@@ -16764,7 +16764,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.25735295, g: 0.38539556, b: 1, a: 1}
+  m_Color: {r: 0.37254903, g: 0.53333336, b: 0.7254902, a: 1}
   m_Intensity: 3.4
   m_Range: 18
   m_SpotAngle: 30
@@ -17220,7 +17220,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.25735295, g: 0.38539556, b: 1, a: 1}
+  m_Color: {r: 0.37254903, g: 0.53333336, b: 0.7254902, a: 1}
   m_Intensity: 4.35
   m_Range: 16.2
   m_SpotAngle: 30
@@ -17779,7 +17779,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.25735295, g: 0.38539556, b: 1, a: 1}
+  m_Color: {r: 0.37254903, g: 0.53333336, b: 0.7254902, a: 1}
   m_Intensity: 4.35
   m_Range: 14.3
   m_SpotAngle: 30
@@ -19458,7 +19458,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.25735295, g: 0.38539556, b: 1, a: 1}
+  m_Color: {r: 0.37254903, g: 0.53333336, b: 0.7254902, a: 1}
   m_Intensity: 3.55
   m_Range: 10.1
   m_SpotAngle: 30
@@ -19594,7 +19594,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.25735295, g: 0.38539556, b: 1, a: 1}
+  m_Color: {r: 0.37254903, g: 0.53333336, b: 0.7254902, a: 1}
   m_Intensity: 3.68
   m_Range: 12.85
   m_SpotAngle: 30
@@ -30566,7 +30566,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.25735295, g: 0.38539556, b: 1, a: 1}
+  m_Color: {r: 0.37254903, g: 0.53333336, b: 0.7254902, a: 1}
   m_Intensity: 2.93
   m_Range: 20.46
   m_SpotAngle: 30
@@ -31114,7 +31114,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.25735295, g: 0.38539556, b: 1, a: 1}
+  m_Color: {r: 0.37254903, g: 0.53333336, b: 0.7254902, a: 1}
   m_Intensity: 6.7
   m_Range: 4.86
   m_SpotAngle: 30
@@ -31987,7 +31987,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.25735295, g: 0.38539556, b: 1, a: 1}
+  m_Color: {r: 0.37254903, g: 0.53333336, b: 0.7254902, a: 1}
   m_Intensity: 8
   m_Range: 25.298893
   m_SpotAngle: 30
