@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 06ae48aec10e2eb46b88b20a744e38e6,
+  m_LightingDataAsset: {fileID: 112000000, guid: 553cf20ea9848b14885b897411463f14,
     type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 34d57272af4034e2b994df042460f469,
     type: 2}
@@ -573,7 +573,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 1.0
+  m_Text: 1,0
 --- !u!222 &48466177
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10289,7 +10289,7 @@ MonoBehaviour:
   windMinPitch: 1
   windMaxPitch: 3
   windMinVolume: 0
-  windMaxVolume: .432000011
+  windMaxVolume: 0.432
 --- !u!65 &859257669
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15958,7 +15958,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 2,500
+  m_Text: "2\_500"
 --- !u!222 &1046676266
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -18839,7 +18839,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 2,500
+  m_Text: "2\_500"
 --- !u!222 &1477603932
 CanvasRenderer:
   m_ObjectHideFlags: 0
