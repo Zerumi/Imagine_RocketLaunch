@@ -84,7 +84,7 @@ PlayerSettings:
     16:9: 1
     Others: 1
   bundleIdentifier: com.Company.ProductName
-  bundleVersion: 1.0
+  bundleVersion: 1
   preloadedAssets: []
   metroEnableIndependentInputSource: 0
   metroEnableLowLatencyPresentationAPI: 0
@@ -158,14 +158,14 @@ PlayerSettings:
   m_BuildTargetGraphicsAPIs: []
   webPlayerTemplate: APPLICATION:Default
   m_TemplateCustomTags: {}
-  wiiUTitleID: 0005000011000000
-  wiiUGroupID: 00010000
+  wiiUTitleID: 5000011000000
+  wiiUGroupID: 10000
   wiiUCommonSaveSize: 4096
   wiiUAccountSaveSize: 2048
   wiiUOlvAccessKey: 0
   wiiUTinCode: 0
   wiiUJoinGameId: 0
-  wiiUJoinGameModeMask: 0000000000000000
+  wiiUJoinGameModeMask: 0
   wiiUCommonBossSize: 0
   wiiUAccountBossSize: 0
   wiiUAddOnUniqueIDs: []
@@ -214,8 +214,8 @@ PlayerSettings:
   ps4ParentalLevel: 1
   ps4ContentID: ED1633-NPXX51362_00-0000000000000000
   ps4Category: 0
-  ps4MasterVersion: 01.00
-  ps4AppVersion: 01.00
+  ps4MasterVersion: 1
+  ps4AppVersion: 1
   ps4AppType: 0
   ps4ParamSfxPath: 
   ps4VideoOutPixelFormat: 0
@@ -285,8 +285,8 @@ PlayerSettings:
   psp2ShortTitle: Not Set
   psp2ContentID: IV0000-ABCD12345_00-0123456789ABCDEF
   psp2Category: 0
-  psp2MasterVersion: 01.00
-  psp2AppVersion: 01.00
+  psp2MasterVersion: 1
+  psp2AppVersion: 1
   psp2TVBootMode: 0
   psp2EnterButtonAssignment: 2
   psp2TVDisableEmu: 0
@@ -318,7 +318,7 @@ PlayerSettings:
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
-  metroCertificateNotAfter: 0000000000000000
+  metroCertificateNotAfter: d0d0d0d0d0d0d0d0
   metroApplicationDescription: Activity10
   metroStoreTileLogo80: 
   metroStoreTileLogo: 
@@ -399,7 +399,7 @@ PlayerSettings:
   tizenMicrophonePermissions: 0
   n3dsUseExtSaveData: 0
   n3dsCompressStaticMem: 1
-  n3dsExtSaveDataNumber: 0x12345
+  n3dsExtSaveDataNumber: 74565
   n3dsStackSize: 131072
   n3dsTargetPlatform: 2
   n3dsRegion: 7
@@ -407,7 +407,7 @@ PlayerSettings:
   n3dsLogoStyle: 3
   n3dsTitle: GameName
   n3dsProductCode: 
-  n3dsApplicationId: 0xFF3FF
+  n3dsApplicationId: 1045503
   stvDeviceAddress: 
   stvProductDescription: 
   stvProductAuthor: 
@@ -509,20 +509,20 @@ PlayerSettings:
   - WebGL::emscriptenArgs
   - WebGL::template
   - additionalIl2CppArgs::additionalIl2CppArgs
-  Analytics_ServiceEnabled::Analytics_ServiceEnabled: False
-  Build_ServiceEnabled::Build_ServiceEnabled: False
-  Collab_ServiceEnabled::Collab_ServiceEnabled: False
-  ErrorHub_ServiceEnabled::ErrorHub_ServiceEnabled: False
-  Game_Performance_ServiceEnabled::Game_Performance_ServiceEnabled: False
-  Hub_ServiceEnabled::Hub_ServiceEnabled: False
-  Purchasing_ServiceEnabled::Purchasing_ServiceEnabled: False
-  UNet_ServiceEnabled::UNet_ServiceEnabled: False
-  Unity_Ads_ServiceEnabled::Unity_Ads_ServiceEnabled: False
+  Analytics_ServiceEnabled::Analytics_ServiceEnabled: false
+  Build_ServiceEnabled::Build_ServiceEnabled: false
+  Collab_ServiceEnabled::Collab_ServiceEnabled: false
+  ErrorHub_ServiceEnabled::ErrorHub_ServiceEnabled: false
+  Game_Performance_ServiceEnabled::Game_Performance_ServiceEnabled: false
+  Hub_ServiceEnabled::Hub_ServiceEnabled: false
+  Purchasing_ServiceEnabled::Purchasing_ServiceEnabled: false
+  UNet_ServiceEnabled::UNet_ServiceEnabled: false
+  Unity_Ads_ServiceEnabled::Unity_Ads_ServiceEnabled: false
   WebGL::emscriptenArgs: 
   WebGL::template: APPLICATION:Default
   additionalIl2CppArgs::additionalIl2CppArgs: 
   firstStreamedSceneWithResources: 0
-  cloudProjectId: 
-  projectName: 
-  organizationId: 
+  cloudProjectId: 4527148b-4319-4ede-8b8d-1948fbefb2ab
+  projectName: Rocket Launch Sim
+  organizationId: pashamalkovich
   cloudEnabled: 0
