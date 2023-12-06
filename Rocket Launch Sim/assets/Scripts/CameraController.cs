@@ -16,8 +16,10 @@ public class CameraController : MonoBehaviour
 	[SerializeField]
 	float offset = 0;
 
-	// Is the rocket flying?
-	bool flying = false;
+    const float OFFSET_Z = 17;
+
+    // Is the rocket flying?
+    bool flying = false;
 	// Does the rocket still have fuel?
 	bool hasFuel = true;
 
@@ -44,6 +46,7 @@ public class CameraController : MonoBehaviour
 		var newPos = transform.position;
 		// Track x-position
 		newPos.x = target.transform.position.x;
+		newPos.z = target.transform.position.z - OFFSET_Z;
 
 		// Track y-position + offset
 		newPos.y = target.transform.position.y + offset;
