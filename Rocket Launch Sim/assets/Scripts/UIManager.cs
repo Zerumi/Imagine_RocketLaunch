@@ -374,8 +374,10 @@ public class UIManager : MonoBehaviour
 	void EnableControlPanel(bool enabled)
 	{
 		cpDisabled = !enabled;
+		rocketFirstMassSlider.interactable = enabled;
 		rocketSecondMassSlider.interactable = enabled;
 		fuelTypeSlider.interactable = enabled;
+		fuelFirstAmountSlider.interactable = enabled;
 		fuelSecondAmountSlider.interactable = enabled;
 
 		//Launch button is only enabled if we're also not over budget
